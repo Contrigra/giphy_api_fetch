@@ -1,0 +1,10 @@
+
+* {
+    margin: 16px;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
