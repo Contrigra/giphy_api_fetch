@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/normalize.css">
+    <title>Giphy fetcher</title>
+</head>
+<body>
+<img src="#" alt="#">
+<input type="search" name="search_query" id="search">
+<button>Fetch</button>
+<script>
+    const fetchButton = document.querySelector("button");
+    const input = document.querySelector("#search")
+    const api_key = "iqIrrjH9D47Q3cY7dBD1EaA59pFnyoJy"
+    const img = document.querySelector("img");
+    // add search function
+    fetchGif()
+
+    function fetchGif(query) {
+        if (query) {
+            fetch(`https://api.giphy.com/v1/gifs/search?api_key=${api_key}&q=${query}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.data[0].images.original.url)
+                    img.src = data.data[0].images.original.url
+                })
+        } else {
+            fetch(`https://api.giphy.com/v1/gifs/random?api_key=${api_key}&tag=&rating=r`, {mode: 'cors'})
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.data.images.original.url);
+                    img.src = data.data.images.original.url;
+                })
+        }
+    }
+
+    fetchButton.addEventListener('click', e => {
+        fetchGif(input.value)
+    });
+</script>
+</body>
+</html>
